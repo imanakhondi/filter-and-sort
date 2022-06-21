@@ -1,5 +1,6 @@
 import React, { useContext, useReducer } from "react";
-import {productsData} from "../../db/products"
+import { productsData } from "../../db/products";
+import _ from "lodash"
 
 // const initialState = [
 //   { name: "react", price: 88, quantity: 1, id: 1 },
@@ -35,21 +36,67 @@ const reducer = (state, action) => {
         return updatedProducts;
       }
     }
-    case "filter": {
-      
-// console.log(action.event.target.value);
-if(action.event.target.value===""){
-  return productsData;
-}else{
-  const updatedProduct= productsData.filter((p)=>p.availableSize.indexOf(action.event.target.value)>=0)
-console.log(updatedProduct);       
-return updatedProduct;
-}
+
+    //     case "filter": {
+
+    // // console.log(action.event.target.value);
+    // if(action.event.target.value===""){
+    //   return productsData;
+    // }else{
+    //   const updatedProduct= productsData.filter((p)=>p.availableSize.indexOf(action.event.target.value)>=0)
+    // console.log(updatedProduct);
+    // return updatedProduct;
+    // }
+
+    //     }
+
+    case "filter":
+      const value = action.selectedOption.value;
+      if (value === "") {
+        return productsData;
+      } else {
+        const updatedProduct = productsData.filter(
+          (p) => p.availableSize.indexOf(action.selectedOption.value) >= 0
+        );
+
+        return updatedProduct;
+      }
+
+    case "sort": {
+      const value =action.selectedOption.value;
+     
+      // if (value === "highest") {
+      //   const products = [...state];
+      //   const sortedProducts = products.sort((a, b) =>
+      //     a.price < b.price ? 1 : -1
+      //   );
+
+      //   return sortedProducts;
+      // } else {
+      //   const products = [...state];
+      //   const sortedProducts = products.sort((a, b) =>
+      //     a.price > b.price ? 1 : -1
+      //   );
+      //   return sortedProducts;
+      // }
+
+
+      //*********** lodash ***********/
+      const products = [...state];
+      if (value === "highest") {
+          const sortedProducts =  _.orderBy(products, ['price'],['asc']);
+  
+          return sortedProducts;
+        } else {
+        
+          const sortedProducts = _.orderBy(products, ['price'],['desc']);
+          return sortedProducts;
+        }
       
     }
 
     default:
-      return productsData;
+      return state;
   }
 };
 
