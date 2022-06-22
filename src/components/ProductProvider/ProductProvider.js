@@ -1,6 +1,6 @@
 import React, { useContext, useReducer } from "react";
 import { productsData } from "../../db/products";
-import _ from "lodash"
+import _ from "lodash";
 
 // const initialState = [
 //   { name: "react", price: 88, quantity: 1, id: 1 },
@@ -63,8 +63,8 @@ const reducer = (state, action) => {
       }
 
     case "sort": {
-      const value =action.selectedOption.value;
-     
+      const value = action.selectedOption.value;
+
       // if (value === "highest") {
       //   const products = [...state];
       //   const sortedProducts = products.sort((a, b) =>
@@ -80,21 +80,30 @@ const reducer = (state, action) => {
       //   return sortedProducts;
       // }
 
-
       //*********** lodash ***********/
       const products = [...state];
       if (value === "highest") {
-          const sortedProducts =  _.orderBy(products, ['price'],['asc']);
-  
-          return sortedProducts;
-        } else {
-        
-          const sortedProducts = _.orderBy(products, ['price'],['desc']);
-          return sortedProducts;
-        }
-      
+        const sortedProducts = _.orderBy(products, ["price"], ["asc"]);
+
+        return sortedProducts;
+      } else {
+        const sortedProducts = _.orderBy(products, ["price"], ["desc"]);
+        return sortedProducts;
+      }
     }
 
+    case "search": {
+      const value = action.event.target.value;
+      if (value === "") {
+        return productsData;
+      } else {
+        const filterdProduct = productsData.filter((product) =>
+          product.title.toLowerCase().includes(value.toLowerCase())
+        );
+
+        return filterdProduct;
+      }
+    }
     default:
       return state;
   }

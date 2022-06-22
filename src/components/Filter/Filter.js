@@ -4,6 +4,7 @@ import styles from "./filter.module.css";
 
 import Select from "react-select";
 
+
 const Filter = () => {
   const dispatch = useActionProduct();
   const [value, setValue] = useState("");
@@ -45,10 +46,7 @@ const Filter = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.search}>
-        <p>search for</p>
-        <input placeholder="search for ..."></input>
-      </div>
+     
       <div className={styles.filter}>
         <p>filter product based on:</p>
         <div>
