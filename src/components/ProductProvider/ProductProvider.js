@@ -82,7 +82,7 @@ const reducer = (state, action) => {
 
       //*********** lodash ***********/
       const products = [...state];
-      if (value === "highest") {
+      if (value === "lowest") {
         const sortedProducts = _.orderBy(products, ["price"], ["asc"]);
 
         return sortedProducts;
@@ -95,9 +95,9 @@ const reducer = (state, action) => {
     case "search": {
       const value = action.event.target.value;
       if (value === "") {
-        return productsData;
+        return state;
       } else {
-        const filterdProduct = productsData.filter((product) =>
+        const filterdProduct = state.filter((product) =>
           product.title.toLowerCase().includes(value.toLowerCase())
         );
 

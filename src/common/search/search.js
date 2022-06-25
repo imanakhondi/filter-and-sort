@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useActionProduct } from "../../components/ProductProvider/ProductProvider";
-const Search = () => {
+const Search = ({filter}) => {
   const dispatch = useActionProduct();
 
   const [value, setValue] = useState("");
 
   const changeHandler = (e) => {
     console.log(e.target.value);
+    dispatch({ type: "filter", selectedOption: filter });
     dispatch({ type: "search", event: e });
     setValue(e.target.value);
   };
